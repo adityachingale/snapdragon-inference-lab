@@ -1,8 +1,7 @@
 from PIL import Image
 import torch
 from transformers import AutoImageProcessor, AutoModelForImageClassification
-import warnings
-warnings.filterwarnings("ignore")
+
 
 MODEL_ID = "microsoft/resnet-18"
 IMAGE_PATH = "data/dog.jpg"
@@ -13,6 +12,10 @@ def main():
     processor = AutoImageProcessor.from_pretrained(MODEL_ID)
     model = AutoModelForImageClassification.from_pretrained(MODEL_ID)
     
+    print("")
+    print("Model Class:")
+    print(type(model))
+        
     #2. Inference Mode
     model.eval()
     
@@ -22,15 +25,23 @@ def main():
     #4. Preprocess the image
     inputs = processor(images=image, return_tensors="pt")
     
+    print("")
     print("Model Input:")
     print("pixel_values shape:", inputs["pixel_values"].shape)
     print("pixel_values dtype:", inputs["pixel_values"].dtype)
+    print("")
     
     #5 Run the inference
     with torch.inference_mode():
         outputs = model(**inputs)
         
     logits = outputs.logits
+    
+    print("")
+    print("Model Output:")
+    print("logits shape:", logits.shape)
+    print("logits dtype:", logits.dtype)
+    print("")
     
     #6. Convert logits to probabilities
     probabilities = torch.softmax(logits, dim=-1)
@@ -41,7 +52,7 @@ def main():
     print("\nTop 5 Predictions:")
     for prob, idx in zip(top5_probabilities[0], top5_indices[0]):
         label = model.config.id2label[idx.item()]
-        print(f"{label:30s} {prob.item():.4%}")
+        print(f"\n{label:30s} {prob.item():.4%}")
         
 if __name__ == "__main__":
     main()
