@@ -1,0 +1,2 @@
+model,model_id,task,input_shape,source_framework,source_format,target_runtime,device,chipset,soc,hexagon,weights_precision,activations_precision,latency_ms,model_size_mb,accuracy_metric,accuracy_value,notes
+ResNet-18,microsoft/resnet-18,ImageNet-1K image classification,1x3x224x224,PyTorch,ONNX,QNN DLC,Samsung Galaxy S24 (Family),Snapdragon 8 Gen 3,SM8650,v75,TBD,TBD,0.707,,,,FP baseline before explicit quantization

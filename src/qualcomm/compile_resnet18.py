@@ -87,5 +87,42 @@ def main():
     
     print(f"Compiled model downloaded to {OUTPUT_PATH}")
     
+    # ============================================================
+    # Profile the compiled QNN model
+    # ============================================================
+
+    print("\nSubmitting profiling job...")
+
+    profile_job = client.submit_profile_job(
+                        model=target_model,
+                        device=device,
+                        name="resnet18_qnn_s24_profile",
+                    )
+
+    print(f"Profile job submitted: {profile_job.url}")
+
+    # Wait for profiling to finish
+    profile_status = profile_job.wait()
+
+    print(f"\nProfile job status: {profile_status}")
+
+    if not profile_status.success:
+        raise RuntimeError(
+            f"Profiling failed: {profile_status}. "
+            f"Job: {profile_job.url}"
+        )
+
+    # Download profiling results
+    profile = profile_job.download_profile()
+
+    print("\n========== PROFILE RESULTS ==========")
+    print(profile)
+    
+    latency_us = profile["execution_summary"]["estimated_inference_time"]
+    latency_ms = latency_us / 1000
+
+    print(f"\nEstimated inference latency: {latency_ms:.3f} ms")
+    
+    
 if __name__ == "__main__":
     main()
