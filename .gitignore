@@ -222,4 +222,21 @@ __marimo__/
 *.pdf
 *.xlsx
 
-.DS_STORE
+# Generated ML model artifacts
+*.onnx
+*.onnx.data
+*.dlc
+*.bin
+*.pt
+*.pth
+*.safetensors
+
+# Generated Qualcomm AI Hub packaging directories
+*_package.onnx/
+
+# Local credentials / Qualcomm configuration
+.qai_hub/
+
+# IDE / OS metadata
+.vscode/
+.DS_Store
