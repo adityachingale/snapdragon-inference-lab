@@ -1,0 +1,1 @@
+/data/local/tmp/qnn-resnet18/input/dog_pixel_values.raw
