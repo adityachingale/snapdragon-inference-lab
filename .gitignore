@@ -222,6 +222,7 @@ models/**/qairt_local/
 
 # Raw QNN input tensors generated from reference images
 data/qnn_inputs/*.raw
+data/qnn_profiles/
 
 # Raw outputs pulled from physical Qualcomm devices
 data/qnn_outputs/
